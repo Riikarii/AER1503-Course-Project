@@ -2,7 +2,7 @@ import numpy as np
 import openmdao.api as om
 
 
-class DeltaVComp(om.ExplicitComponent):
+class TutDeltaVComp(om.ExplicitComponent):
     """
     Compute the delta-V performed given the magnitude of two velocities
     and the angle between them.

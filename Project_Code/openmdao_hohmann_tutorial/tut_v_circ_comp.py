@@ -2,7 +2,7 @@ import numpy as np
 import openmdao.api as om
 
 
-class VCircComp(om.ExplicitComponent):
+class TutVCircComp(om.ExplicitComponent):
     """
     Computes the circular orbit velocity given a radius and gravitational
     parameter.

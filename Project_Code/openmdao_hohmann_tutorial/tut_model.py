@@ -1,7 +1,7 @@
 import openmdao.api as om
-from delta_v_comp import DeltaVComp
-from transfer_orbit_comp import TransferOrbitComp
-from v_circ_comp import VCircComp
+from tut_delta_v_comp import TutDeltaVComp
+from tut_transfer_orbit_comp import TutTransferOrbitComp
+from tut_v_circ_comp import TutVCircComp
 """
 Two instances of VCircComp are used to compute the velocity of the spacecraft
 in the initial and final circular orbits.
@@ -40,21 +40,21 @@ if __name__ == '__main__':
 
     model = prob.model
 
-    model.add_subsystem('leo', subsys=VCircComp(),
+    model.add_subsystem('leo', subsys=TutVCircComp(),
                         promotes_inputs=[('r', 'r1'), 'mu'])
-    model.add_subsystem('geo', subsys=VCircComp(),
+    model.add_subsystem('geo', subsys=TutVCircComp(),
                         promotes_inputs=[('r', 'r2'), 'mu'])
 
-    model.add_subsystem('transfer', subsys=TransferOrbitComp(),
+    model.add_subsystem('transfer', subsys=TutTransferOrbitComp(),
                         promotes_inputs=[('rp', 'r1'), ('ra', 'r2'), 'mu'])
 
-    model.add_subsystem('dv1', subsys=DeltaVComp(),
+    model.add_subsystem('dv1', subsys=TutDeltaVComp(),
                         promotes_inputs=[('dinc', 'dinc1')])
 
     model.connect('leo.vcirc', 'dv1.v1')
     model.connect('transfer.vp', 'dv1.v2')
 
-    model.add_subsystem('dv2', subsys=DeltaVComp(),
+    model.add_subsystem('dv2', subsys=TutDeltaVComp(),
                         promotes_inputs=[('dinc', 'dinc2')])
 
     model.connect('transfer.va', 'dv2.v1')

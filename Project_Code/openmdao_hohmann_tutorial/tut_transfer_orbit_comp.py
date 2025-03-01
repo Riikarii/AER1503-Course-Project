@@ -2,7 +2,7 @@ import numpy as np
 import openmdao.api as om
 
 
-class TransferOrbitComp(om.ExplicitComponent):
+class TutTransferOrbitComp(om.ExplicitComponent):
     """
      computes the velocity magnitude at periapsis and apoapsis of an orbit,
      given the radii of periapsis and apoapsis, and the gravitational
