@@ -1,0 +1,1 @@
+Final project for AER1503 Spacecraft Dynamics and Control, concerning the development of a Python program to optimize interplanetary missions to Mars. Includes final project report and accompanying code.
