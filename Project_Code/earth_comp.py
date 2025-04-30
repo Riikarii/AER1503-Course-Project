@@ -18,8 +18,6 @@ class EarthOrbitComp(om.ExplicitComponent):
         self.declare_partials(of='v_LEO', wrt='r_LEO')
         self.declare_partials(of='v_LEO', wrt='mu_earth')
 
-        # self.declare_partials('*', '*', method='fd')
-
     def compute(self, inputs, outputs):
         r = inputs['r_LEO']
         mu = inputs['mu_earth']
@@ -37,9 +35,6 @@ class EarthOrbitComp(om.ExplicitComponent):
 class EarthEscapeDVComp(om.ExplicitComponent):
     """
     Computes the delta-V required to escape Earth from LEO.
-    Uses the patched-conic formula:
-      ΔV_escape = sqrt(v_LEO^2 + v_inf^2) - v_LEO,
-    where v_inf is the required hyperbolic excess speed.
     """
     def setup(self):
         self.add_input('v_LEO', val=1.0, units='km/s',
@@ -54,8 +49,6 @@ class EarthEscapeDVComp(om.ExplicitComponent):
         self.declare_partials(of='dv_escape', wrt='v_LEO')
         self.declare_partials(of='dv_escape', wrt='v_inf')
 
-        self.declare_partials('*', '*', method='fd')
-
     def compute(self, inputs, outputs):
         v_LEO = inputs['v_LEO']
         v_inf = inputs['v_inf']
@@ -64,7 +57,6 @@ class EarthEscapeDVComp(om.ExplicitComponent):
     def compute_partials(self, inputs, partials):
         v_LEO = inputs['v_LEO']
         v_inf = inputs['v_inf']
-        # dv_esc = np.sqrt(v_LEO**2 + v_inf**2) - v_LEO
 
         partials['dv_escape', 'v_LEO'] = v_LEO / \
             (np.sqrt(v_LEO**2 + v_inf**2)) - 1
